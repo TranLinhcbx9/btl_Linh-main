@@ -1,0 +1,142 @@
+﻿@using Eshopper.Models.EF;
+
+@using PagedList.Mvc;
+@model PagedList.IPagedList<SanPham>
+
+@{ ViewBag.Title = "Sảm phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listALLProducts = (List<SanPham>)ViewBag.AllProduct; }
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@section slide
+{
+
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"><h2>AppleShop<em> Website</em></h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="index.html">
+                                Trang chủ
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active" >
+                            <a class="nav-link" href="@Url.Action("Index", "Product")">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Card/Index">Giỏ hàng</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Thông tin</a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="about.html">Thông tin vê chúng tôi</a>
+                                <a class="dropdown-item" href="blog.html">Blog</a>
+                                @*<a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                                    <a class="dropdown-item" href="terms.html">Terms</a>*@
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Liên lạc với chúng tôi</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main-banner header-text" id="top">
+        <div class="Modern-Slider">
+            <!-- Item -->
+            <div class="item item-1">
+                <div class="img-fill">
+                    <div class="text-content">
+
+                        <a href="products.html" class="filled-button">Products</a>
+                    </div>
+                </div>
+            </div>
+            <!-- // Item -->
+            <!-- Item -->
+            <div class="item item-2">
+                <div class="img-fill">
+                    <div class="text-content">
+
+                        <a href="about.html" class="filled-button">About Us</a>
+                    </div>
+                </div>
+            </div>
+            <!-- // Item -->
+            <!-- Item -->
+            <div class="item item-3">
+                <div class="img-fill">
+                    <div class="text-content">
+
+                        <a href="contact.html" class="filled-button">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <!-- // Item -->
+        </div>
+    </div>
+}
+<br />
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-heading">
+                <h2>Tất cả sản phẩm</h2>
+                <br/>
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="align-content: center">
+                    <div class="input-group">
+                        <input id="searchString" name="searchString" type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm..."
+                               aria-label="Search" aria-describedby="basic-addon2" style="background-color: #fff !important">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4" style="width:300">
+                <div class="service-item">
+                    <img src=" @Html.DisplayFor(modelItem => item.URLAnh)" width="200" alt="">
+                    <div class="down-content">
+                        <h4> @Html.DisplayFor(modelItem => item.TenSP)</h4>
+                        <div style="margin-bottom:10px;">
+                            <span> <del>@(@item.DonGia.HasValue ? @item.DonGia.Value.ToString("N0") : "Liên hệ")<sup>VND</sup></del> <br />@(@item.GiaKM.HasValue ? @item.GiaKM.Value.ToString("N0") : @item.DonGia.Value.ToString("N0"))<sup>VND</sup></span>
+                        </div>
+
+                        <p> @Html.DisplayFor(modelItem => item.MoTa)</p>
+                        <a href="/Product/Detail?id=@item.MaSP.Trim()" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem chi tiết</a>
+                        @*@Html.ActionLink("Xem chi tiết", "Detail", new { id = item.MaSP.Trim() })*@
+                    </div>
+                </div>
+
+                <br>
+            </div>}
+
+    </div>
+</div>
+<br>
+<div class="text-center">
+    <br />
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+</div>

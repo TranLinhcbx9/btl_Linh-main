@@ -1,0 +1,280 @@
+﻿@using Eshopper.Models.EF;
+
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listNewProducts = (List<SanPham>)ViewBag.NewProducts;
+    var listPhuKiens = (List<SanPham>)ViewBag.ListPhuKiens;
+    var listMacbooks = (List<SanPham>)ViewBag.ListMacBooks;
+    var listAppleWatchs = (List<SanPham>)ViewBag.ListAppleWatchs;
+    var listIpads = (List<SanPham>)ViewBag.ListIpads;
+}
+@section slide
+{
+
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"><h2>AppleShop<em> Website</em></h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">
+                                Trang chủ
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Product")">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Card/Index">Giỏ hàng</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Thông tin</a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="about.html">Thông tin vê chúng tôi</a>
+                                <a class="dropdown-item" href="blog.html">Blog</a>
+                                @*<a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                                    <a class="dropdown-item" href="terms.html">Terms</a>*@
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Liên lạc với chúng tôi</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main-banner header-text" id="top">
+        <div class="Modern-Slider">
+            <!-- Item -->
+            <div class="item item-1">
+                <div class="img-fill">
+                    <div class="text-content">
+                        
+                        <a href="products.html" class="filled-button">Products</a>
+                    </div>
+                </div>
+            </div>
+            <!-- // Item -->
+            <!-- Item -->
+            <div class="item item-2">
+                <div class="img-fill">
+                    <div class="text-content">
+                        
+                        <a href="about.html" class="filled-button">About Us</a>
+                    </div>
+                </div>
+            </div>
+            <!-- // Item -->
+            <!-- Item -->
+            <div class="item item-3">
+                <div class="img-fill">
+                    <div class="text-content">
+                       
+                        <a href="contact.html" class="filled-button">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <!-- // Item -->
+        </div>
+    </div>
+}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-heading">
+                <h2><em>IPHONE</em></h2>
+              
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <a href="/Product/Index" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem tất cả</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in listNewProducts)
+        {
+            <div class="col-md-4">
+                <div class="service-item">
+                    <img src="@item.URLAnh"  alt="">
+                    <div class="down-content">
+                        <h4>@item.TenSP</h4>
+                        <div style="margin-bottom:10px;">
+                            <span> <del>@(@item.DonGia.HasValue ? @item.DonGia.Value.ToString("N0") : "Liên hệ")<sup>VND</sup></del> <br />@(@item.GiaKM.HasValue ? @item.GiaKM.Value.ToString("N0") : @item.DonGia.Value.ToString("N0"))<sup>VND</sup></span>
+                        </div>
+
+                        <p>@item.MoTa</p>
+                        <a href="/Product/Detail?id=@item.MaSP.Trim()" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem chi tiết</a>
+                        @*<a href="@Html.ActionLink("Details", "Details", new { id=item.MaSP })" class="filled-button">Xem chi tiết</a>*@
+                    </div>
+                </div>
+
+                <br>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-heading">
+                <h2><em>PHỤ KIỆN</em></h2>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <a href="/Product/Index" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem tất cả</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in listPhuKiens)
+        {
+            <div class="col-md-4">
+                <div class="service-item">
+                    <img src="@item.URLAnh" alt="">
+                    <div class="down-content">
+                        <h4>@item.TenSP</h4>
+                        <div style="margin-bottom:10px;">
+                            <span> <del>@(@item.DonGia.HasValue ? @item.DonGia.Value.ToString("N0") : "Liên hệ")<sup>VND</sup></del> <br />@(@item.GiaKM.HasValue ? @item.GiaKM.Value.ToString("N0") : @item.DonGia.Value.ToString("N0"))<sup>VND</sup></span>
+                        </div>
+
+                        <p>@item.MoTa</p>
+                        <a href="/Product/Detail?id=@item.MaSP.Trim()" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem chi tiết</a>
+                        @*<a href="@Html.ActionLink("Details", "Details", new { id=item.MaSP })" class="filled-button">Xem chi tiết</a>*@
+                    </div>
+                </div>
+
+                <br>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-heading">
+                <h2><em>MACBOOK</em></h2>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <a href="/Product/Index" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem tất cả</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in listMacbooks)
+        {
+            <div class="col-md-4">
+                <div class="service-item">
+                    <img src="@item.URLAnh" alt="">
+                    <div class="down-content">
+                        <h4>@item.TenSP</h4>
+                        <div style="margin-bottom:10px;">
+                            <span> <del>@(@item.DonGia.HasValue ? @item.DonGia.Value.ToString("N0") : "Liên hệ")<sup>VND</sup></del> <br />@(@item.GiaKM.HasValue ? @item.GiaKM.Value.ToString("N0") : @item.DonGia.Value.ToString("N0"))<sup>VND</sup></span>
+                        </div>
+
+                        <p>@item.MoTa</p>
+                        <a href="/Product/Detail?id=@item.MaSP.Trim()" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem chi tiết</a>
+                        @*<a href="@Html.ActionLink("Details", "Details", new { id=item.MaSP })" class="filled-button">Xem chi tiết</a>*@
+                    </div>
+                </div>
+
+                <br>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-heading">
+                <h2><em>APPLE WATCH</em></h2>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <a href="/Product/Index" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem tất cả</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in listAppleWatchs)
+        {
+            <div class="col-md-4">
+                <div class="service-item">
+                    <img src="@item.URLAnh" alt="">
+                    <div class="down-content">
+                        <h4>@item.TenSP</h4>
+                        <div style="margin-bottom:10px;">
+                            <span> <del>@(@item.DonGia.HasValue ? @item.DonGia.Value.ToString("N0") : "Liên hệ")<sup>VND</sup></del> <br />@(@item.GiaKM.HasValue ? @item.GiaKM.Value.ToString("N0") : @item.DonGia.Value.ToString("N0"))<sup>VND</sup></span>
+                        </div>
+
+                        <p>@item.MoTa</p>
+                        <a href="/Product/Detail?id=@item.MaSP.Trim()" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem chi tiết</a>
+                        @*<a href="@Html.ActionLink("Details", "Details", new { id=item.MaSP })" class="filled-button">Xem chi tiết</a>*@
+                    </div>
+                </div>
+
+                <br>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-heading">
+                <h2><em>IPAD</em></h2>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <a href="/Product/Index" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem tất cả</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in listIpads)
+        {
+            <div class="col-md-4">
+                <div class="service-item">
+                    <img src="@item.URLAnh" alt="">
+                    <div class="down-content">
+                        <h4>@item.TenSP</h4>
+                        <div style="margin-bottom:10px;">
+                            <span> <del>@(@item.DonGia.HasValue ? @item.DonGia.Value.ToString("N0") : "Liên hệ")<sup>VND</sup></del> <br />@(@item.GiaKM.HasValue ? @item.GiaKM.Value.ToString("N0") : @item.DonGia.Value.ToString("N0"))<sup>VND</sup></span>
+                        </div>
+
+                        <p>@item.MoTa</p>
+                        <a href="/Product/Detail?id=@item.MaSP.Trim()" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Xem chi tiết</a>
+                        @*<a href="@Html.ActionLink("Details", "Details", new { id=item.MaSP })" class="filled-button">Xem chi tiết</a>*@
+                    </div>
+                </div>
+
+                <br>
+            </div>
+        }
+
+    </div>
+</div>
+<br />

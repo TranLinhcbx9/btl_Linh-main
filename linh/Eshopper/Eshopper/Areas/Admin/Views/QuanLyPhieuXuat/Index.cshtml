@@ -1,0 +1,92 @@
+﻿@using Eshopper.Models.EF;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<PhieuXuat >
+
+@{ ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml"; }
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<div class="container-fluid">
+    <h2>Danh sách phiếu xuất</h2>
+    <p>
+        <a href="@Url.Action("Create")" class="btn btn-outline-primary">
+            Tạo mới phiếu xuất
+        </a>
+    </p>
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NguoiDung.SDT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NgayDat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NgayShip)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.NguoiDung.SDT)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NgayDat)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NgayShip)
+    </td>
+    <td>
+    <td>
+        <a href="@Url.Action("Details", new {  maPX = item.MaPX.TrimEnd() })" class="btn btn-outline-secondary">
+            Chi tiết
+        </a>
+        <a href="@Url.Action("Update", new {  maPX = item.MaPX.TrimEnd() })" class="btn btn-outline-secondary">
+            Cập nhập
+        </a>
+        <button type="button" class="btn btn-outline-danger ml-2" onclick="DeletePhieuXuat('@item.MaPX.TrimEnd()')">
+            Xóa
+        </button>
+    </td>
+</tr>}
+
+    </table>
+</div>
+
+<div class="text-center">
+    <br />
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                                    new { page }))
+</div>
+
+@section scripts{
+    <script>
+        function DeletePhieuXuat(maPN) {
+            if (confirm("Bạn có chắc muốn xóa liên hệ đã chọn không?")) {
+                $.ajax({
+                    type: "Post",
+                    url: "/Admin/QuanLyPhieuXuat/DeletePhieuXuat",
+                    data: { maPN: maPN },
+                    success: function (res) {
+                        if (res) {
+                            alert("Xóa thành công!");
+                            $("#row-" + maPN).fadeOut();
+                        }
+                        else {
+                            alert("Bị lỗi!");
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+}
